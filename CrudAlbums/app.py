@@ -8,8 +8,9 @@ app.config['MYSQL_USER']= 'root'
 app.config['MYSQL_PASSWORD']= ''
 app.config['MYSQL_DB']= 'bdflask'
 
-tokenGen = GeneradorToken()
-app.secret_key= tokenGen
+
+app.secret_key= 'TokenGen()'
+
 
 mysql= MySQL(app)
 

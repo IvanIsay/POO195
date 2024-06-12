@@ -2,7 +2,7 @@ import secrets
 import string
 import hashlib
 
-class GeneradorToken:
+class TokenGen:
     def __init__(self):
         pass
       
@@ -12,14 +12,12 @@ class GeneradorToken:
         contrasena = ''.join(secrets.choice(caracteres) for _ in range(longitud))
         secretKeyB = contrasena.encode('utf-8')
         keyHash = hashlib.sha256(secretKeyB).hexdigest()
-       
-        return keyHash
+        keySting= str(keyHash)
+        return keySting
 
 
 # uso
 #generador = GeneradorToken()
-
-#mi_secret_key = generador.generarPass()
 #hash_resultante = generador.generarKey()
 #print(hash_resultante)
 
