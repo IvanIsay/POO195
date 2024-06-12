@@ -1,5 +1,6 @@
 from flask import Flask,request,render_template,url_for,redirect,flash
 from flask_mysqldb import MySQL 
+from tokenGen import *
 
 app= Flask(__name__)
 app.config['MYSQL_HOST']='localhost'
@@ -7,7 +8,8 @@ app.config['MYSQL_USER']= 'root'
 app.config['MYSQL_PASSWORD']= ''
 app.config['MYSQL_DB']= 'bdflask'
 
-app.secret_key='mysecretkey'
+tokenGen = GeneradorToken()
+app.secret_key= tokenGen
 
 mysql= MySQL(app)
 
