@@ -44,6 +44,36 @@ def guardarAlbum():
         
         flash('Album Guardado correctamente')
         return redirect(url_for('index'))
+    
+    
+    
+@app.route('/editar/<id>')
+def editar(id):
+    cur= mysql.connection.cursor()
+    cur.execute('select * from albums where idAlbum=%s',[id])
+    albumE= cur.fetchone()
+    return render_template('editar.html' ,album= albumE)
+
+
+@app.route('/ActualizarAlbum/<id>',methods=['POST'])
+def ActualizarAlbum(id):
+    if request.method == 'POST':
+        
+        #tomamos los datos que viene por POST
+        Ftitulo= request.form['txtTitulo']
+        Fartista= request.form['txtArtista']
+        Fanio= request.form['txtAnio']
+        
+        #Actualizamos a la BD
+        cursor= mysql.connection.cursor()
+        cursor.execute('update albums set titulo= %s ,artista= %s, anio=%s where idAlbum= %s', (Ftitulo,Fartista,Fanio,id) )
+        mysql.connection.commit()
+        
+        flash('Album Actualizado correctamente')
+        return redirect(url_for('index'))
+    
+    
+    
 
       
 #Manejo de excepciones para rutas        
