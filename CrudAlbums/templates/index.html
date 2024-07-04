@@ -1,75 +1,109 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Albums</title>
-    <script>
-        function confirmarEliminacion(albumId) {
-            if (confirm('¿Está seguro que desea eliminar este álbum?')) {
-                window.location.href = '/eliminar/' + albumId;
-            }
-        }
-    </script>
-</head>
-<body>
+
+{% extends "plantilla.html" %}
+
+
+{%block body%}
 
 <!-- mensaje con Jinja -->
 {% with msj= get_flashed_messages() %}
 {% if msj %}
     {% for mensaje in msj %}
-        <h1>{{ mensaje }}</h1>
+          <script> 
+            Swal.fire({
+            title: "Correcto",
+            text: "Album Guardado con exito",
+            icon: "success"
+            });
+        </script>
     {% endfor %}
 {% endif %}
 {% endwith %}
 
-<h1>Gestión de Albums</h1>
+<h2 class="text-center mt-5 mb-5 display-4 text-danger">Gestión de Albums</h2>
 
-<br>
-<br>
 
-<form action="/guardarAlbum" method="post">
+<div class="row">
+    <div class="col-md-5">
+    <!-- aqui va el formulario -->
 
-    <label>Título:</label>
-    <input type="text" name="txtTitulo">
+            
+            <form action="/guardarAlbum" method="post">
 
-    <label>Artista:</label>
-    <input type="text" name="txtArtista">
+                <div class="container"> 
 
-    <label>Año:</label>
-    <input type="number" name="txtAnio">
+                <div class="mb-3">
+                    <label>Título:</label>
+                    <input type="text" name="txtTitulo" class="form-control">
+                </div>
 
-    <button type="submit">Guardar Álbum</button>
-</form>
+                <div class="mb-3">
+                    <label>Artista:</label>
+                    <input type="text" name="txtArtista" class="form-control">
+                </div>
+            
+                <div class="mb-3">
+                    <label>Año:</label>
+                    <input type="number" name="txtAnio" class="form-control">
+                </div>
 
-<br>
-<br>
-<br>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success mt-2 mb-5" >Guardar Álbum</button>
+                </div>
+            
 
-<table>
-    <thead>
-        <tr>
-            <td>ID:</td>
-            <td>Álbum:</td>
-            <td>Artista:</td>
-            <td>Año:</td>
-            <td>Operaciones</td>
-        </tr>
-    </thead>
+            
+                
 
-    <tbody>
-        {% for album in albums %}
-        <tr>
-            <td>{{ album.0 }}</td>
-            <td>{{ album.1 }}</td>
-            <td>{{ album.2 }}</td>
-            <td>{{ album.3 }}</td>
-            <td><a href="/editar/{{ album.0 }}">Editar</a></td>
-            <td><a href="#" onclick="confirmarEliminacion('{{ album.0 }}')">Borrar</a></td>    
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+             </div > 
 
-</body>
-</html>
+            
+            </form>
+        
+        </div> <!-- aqui se cierra col-md5-->
+
+    
+
+   
+    <!-- aqui va la tabla -->
+
+        <div class="container col-md-6">
+
+        <table class="table table-hover">
+
+            <thead class="table-dark"   >
+                <tr>
+                    <td>ID:</td>
+                    <td>Álbum:</td>
+                    <td>Artista:</td>
+                    <td>Año:</td>
+                    <td>Operaciones</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for album in albums %}
+                <tr>
+                    <td>{{ album.0 }}</td>
+                    <td>{{ album.1 }}</td>
+                    <td>{{ album.2 }}</td>
+                    <td>{{ album.3 }}</td>
+                    <td>
+                    <a href="/editar/{{ album.0 }}" class="btn btn-warning btn-sm">Editar</a>
+                    <a  class="btn btn-danger btn-sm" href="#" onclick="confirmarEliminacion('{{ album.0 }}' )">Borrar</a>
+                    </td>    
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>  
+
+
+</div>  <!-- aqui se cierra row-->
+
+
+
+
+
+{%endblock%}
+
