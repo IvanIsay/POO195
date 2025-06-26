@@ -81,6 +81,7 @@
             </thead>
 
             <tbody>
+
                 {% for album in albums %}
                 <tr>
                     <td>{{ album.0 }}</td>
@@ -88,6 +89,7 @@
                     <td>{{ album.2 }}</td>
                     <td>{{ album.3 }}</td>
                     <td>
+                        
                     <a href="/editar/{{ album.0 }}" class="btn btn-warning btn-sm">Editar</a>
                     <a  class="btn btn-danger btn-sm" href="#" onclick="confirmarEliminacion('{{ album.0 }}' )">Borrar</a>
                     </td>    

@@ -3,6 +3,8 @@ from flask_mysqldb import MySQL
 from tokenGen import *
 
 app= Flask(__name__)
+
+
 app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']= 'root'
 app.config['MYSQL_PASSWORD']= ''
@@ -18,10 +20,14 @@ mysql= MySQL(app)
 
 @app.route('/')
 def index():
+    
     try:
+        
         cursor= mysql.connection.cursor();
         cursor.execute('select * from albums')
         consultaA= cursor.fetchall()
+        
+        
         #print(consultaA)
         return render_template('index.html', albums=consultaA )
     except Exception as e:
@@ -60,6 +66,7 @@ def ActualizarAlbum(id):
     if request.method == 'POST':
         
         #tomamos los datos que viene por POST
+        
         Ftitulo= request.form['txtTitulo']
         Fartista= request.form['txtArtista']
         Fanio= request.form['txtAnio']
@@ -76,10 +83,16 @@ def ActualizarAlbum(id):
     
 
       
-#Manejo de excepciones para rutas        
+#Manejo de excepciones para rutas 
+
+       
 @app.errorhandler(404)
 def paginano(e):
     return 'Revisa tu sintaxis: No encontre Nada'  
+
+
+
+
 
 if __name__ == '__main__':
     app.run(port=3000,debug=True)
